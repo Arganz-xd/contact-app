@@ -8,5 +8,18 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arganz-xd/contact-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Arganz-xd/contact-app/issues"
+  },
+  "homepage": "https://github.com/Arganz-xd/contact-app#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "validator": "^13.5.2",
+    "yargs": "^16.2.0"
+  }
 }
