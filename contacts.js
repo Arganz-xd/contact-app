@@ -27,34 +27,32 @@ const saveContact = (nama, email, noHP) => {
   // cek duplikat
   const duplikat = contacts.some((contact) => contact.nama === nama);
   if (duplikat) {
-    console.log(
-      chalk.red.inverse.bold("Nama sudah terdaftar, gunakan nama lain!")
-    );
-    return false;
+    throw new Error("Nama sudah terdaftar, gunakan nama lain!");
   }
 
   // cek email
   if (email) {
     if (!validator.isEmail(email)) {
-      console.log(chalk.red.inverse.bold("Email tidak valid!"));
-      return false;
+      throw new Error("Email tidak valid!");
     }
   }
 
   // cek nomor HP
   if (!validator.isMobilePhone(noHP, "id-ID")) {
-    console.log(chalk.red.inverse.bold("Nomor HP tidak valid!"));
-    return false;
+    throw new Error("Nomor HP tidak valid!");
   }
 
   contacts.push(contact);
 
   fs.writeFileSync("data/contacts.json", JSON.stringify(contacts));
-  console.log(chalk.green.inverse.bold(`Contact berhasil dihapus!`));
+  console.log(chalk.green.inverse.bold(`Contact berhasil ditambahkan!`));
 };
 
 const listContact = () => {
   const contacts = loadContact();
+  if (contacts.length === 0) {
+    throw new Error("Tidak ada contact yang disimpan!");
+  }
   console.log(chalk.cyanBright.inverse.bold("Daftar Contact : "));
   contacts.forEach((contact, i) => {
     console.log(`${i + 1}. ${contact.nama} | ${contact.noHP}`);
@@ -69,8 +67,7 @@ const detailContact = (nama) => {
   );
 
   if (!contact) {
-    console.log(chalk.red.inverse.bold(`${nama} tidak ditemukan!`));
-    return false;
+    throw new Error(`${nama} tidak ditemukan!`);
   }
 
   console.log(chalk.cyanBright.inverse.bold(`${contact.nama}`));
@@ -88,8 +85,7 @@ const deleteContact = (nama) => {
   );
 
   if (index === -1) {
-    console.log(chalk.red.inverse.bold(`${nama} tidak ditemukan!`));
-    return false;
+    throw new Error(`${nama} tidak ditemukan!`);
   }
 
   contacts.splice(index, 1);

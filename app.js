@@ -1,5 +1,11 @@
 const yargs = require("yargs");
-const { saveContact, listContact, detailContact, deleteContact } = require("./contacts");
+const chalk = require("chalk");
+const {
+  saveContact,
+  listContact,
+  detailContact,
+  deleteContact,
+} = require("./contacts");
 
 // Menambahkan contact baru
 yargs
@@ -24,12 +30,13 @@ yargs
       },
     },
     handler(argv) {
-      const contact = {
-        nama: argv.nama,
-        email: argv.email,
-        noHP: argv.noHP,
-      };
-      saveContact(argv.nama, argv.email, argv.noHP);
+      try {
+        saveContact(argv.nama, argv.email, argv.noHP);
+      } catch (error) {
+        console.log(
+          chalk.red.inverse.bold(`Terjadi kesalahan : ${error.message}`)
+        );
+      }
     },
   })
   .demandCommand();
@@ -39,7 +46,13 @@ yargs.command({
   command: "list",
   describe: "Menampilkan contact",
   handler() {
-    listContact();
+    try {
+      listContact();
+    } catch (error) {
+      console.log(
+        chalk.red.inverse.bold(`Terjadi kesalahan : ${error.message}`)
+      );
+    }
   },
 });
 
@@ -55,7 +68,13 @@ yargs.command({
     },
   },
   handler(argv) {
-    detailContact(argv.nama);
+    try {
+      detailContact(argv.nama);
+    } catch (error) {
+      console.log(
+        chalk.red.inverse.bold(`Terjadi kesalahan : ${error.message}`)
+      );
+    }
   },
 });
 
@@ -71,7 +90,13 @@ yargs.command({
     },
   },
   handler(argv) {
-    deleteContact(argv.nama);
+    try {
+      deleteContact(argv.nama);
+    } catch (error) {
+      console.log(
+        chalk.red.inverse.bold(`Terjadi kesalahan : ${error.message}`)
+      );
+    }
   },
 });
 
